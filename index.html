@@ -328,6 +328,23 @@ a.feature:hover .ph,a.feature:focus-visible .ph{--z:1.02}
 .say em{font-style:normal;text-decoration:underline;text-decoration-thickness:.08em;text-underline-offset:.12em}
 figure{margin:0}
 figure .ph{aspect-ratio:16/9}
+/* Imagen real: mismo lugar que el marcador, sin recortes en 16:9 */
+.pic{position:relative;overflow:hidden;background:#ECECEA}
+.pic img{display:block;width:100%;height:100%;object-fit:cover}
+figure .pic{aspect-ratio:16/9}
+.case-cover .pic{aspect-ratio:16/8}
+@media (max-width:700px){.case-cover .pic{aspect-ratio:4/3}.case-cover .pic img{object-position:left center}}
+/* Frase destacada dentro de un párrafo gris: negrita en el negro del texto principal */
+.hl{font-weight:600;color:var(--ink)}
+/* Más aire entre la fila de etiquetas y el párrafo, solo donde hay etiquetas */
+.cols .chips{margin-bottom:.6rem}
+/* Bloque destacado dentro de una sección (Conclusiones de Garantía Premium): celeste, textos del sitio */
+.callout{background:#7CFDF9;color:var(--ink);padding:clamp(2rem, 5vw, 4rem) clamp(1.25rem, 4vw, 3.5rem);display:grid;gap:1.25rem;margin-top:clamp(1.5rem, 4vw, 3rem)}
+.callout .k{color:var(--wine)}
+.callout-t{font-size:clamp(1.75rem, 1.3rem + 1.8vw, 3rem);line-height:1;letter-spacing:-.04em}
+.callout .cols{grid-template-columns:repeat(auto-fit,minmax(min(100%,190px),1fr));margin-top:.5rem}
+.callout .cols p{color:#5E5E5E}
+.callout h4{margin:0;font-size:1.25rem;font-weight:600;letter-spacing:-.025em;line-height:1.15}
 figcaption{color:var(--zmuted);margin-top:.75rem;font-size:1rem}
 .chips{display:flex;flex-wrap:wrap;gap:.4rem;list-style:none;padding:0;margin:0}
 /* Bloques por etapa: imagen y texto en zigzag en desktop, imagen arriba en mobile */
@@ -373,6 +390,7 @@ figcaption{color:var(--zmuted);margin-top:.75rem;font-size:1rem}
 
 <script>
 const P = t => `<span class="pending">${t||'Pendiente'}</span>`;
+const pic = (src, alt) => `<div class="pic"><img src="${src}" alt="${alt}" loading="lazy" decoding="async" width="1600" height="900"></div>`;
 const ph = (tone, fg, label='Imagen próximamente') => `<div class="ph" style="--tone:${tone};--tone-fg:${fg}" role="img" aria-label="${label}"><span class="soon" aria-hidden="true">Imagen próximamente</span></div>`;
 
 const FEATURED = [
@@ -460,7 +478,8 @@ const SEC_GARANTIA = [
     ['problema','El problema','¿Dónde se caía la venta?',`
       <p>El 67,3 % agregaba la garantía al carrito, pero solo el 30,7 % de ellos la terminaba comprando. El dato mostraba dónde se perdía la venta, no por qué. El discovery encontró tres causas encadenadas:</p>
       <ol class="rows"><li>La garantía pasaba desapercibida dentro del carrito.</li><li>No se entendía qué cubría ni cómo se articulaba con la garantía del fabricante.</li><li>Para sumarla había que completar un formulario obligatorio.</li></ol>
-      <p class="say">Resolver solo una <em>no alcanzaba</em> para igualar a la sucursal.</p>
+      <p class="say">Resolver solo una <em>no alcanzaba</em> para igualar a la sucursal.</p>`],
+    ['hipotesis','Hipótesis','Cuatro hipótesis para equiparar la venta',`
       <div class="cols">
         <div><span class="n">H1</span><p>Simplificar el flujo aumentaría la conversión.</p></div>
         <div><span class="n">H2</span><p>Mostrar los beneficios con claridad haría crecer la contratación.</p></div>
@@ -468,7 +487,7 @@ const SEC_GARANTIA = [
         <div><span class="n">H4</span><p>Ofrecerla más allá del carrito aumentaría las ventas.</p></div>
       </div>`],
     ['flujo','Punto de partida','Así era el flujo',`
-      <figure class="rv">${ph('#023852','#9FD8C5','Flujo anterior: carrito, modal de datos y revisión. Imagen próximamente')}<figcaption>Carrito, modal de datos y revisión del flujo anterior.</figcaption></figure>
+      <figure class="rv">${pic('img/garantia-flujo-anterior.webp','Flujo anterior en cuatro pantallas: carrito con la garantía en un desplegable, lista de garantías extendidas, modal que pide datos personales para sumarla y revisión del carrito')}</figure>
       <div class="cols flat">
         <div><h3>Poca visibilidad</h3><p>No había un módulo claro y el ícono no se asociaba al concepto. «Agregar» abría un formulario obligatorio.</p></div>
         <div><h3>Desconfianza</h3><p>Pedía datos que a veces ya existían o eran demasiado específicos para un carrito.</p></div>
@@ -476,21 +495,24 @@ const SEC_GARANTIA = [
       </div>`],
     ['discovery','Discovery','Lo que el carrito no estaba diciendo',`
       <div class="cols flat">
-        <div><h3>Usuarios</h3><ul class="chips"><li class="tag">NPS post-compra</li><li class="tag">Reclamos</li><li class="tag">Pruebas moderadas</li></ul><p>No se entendía qué cubre la garantía, cuándo empieza a regir ni cómo se articula con la del fabricante. Eso generaba confusión y desconfianza.</p></div>
+        <div><h3>Usuarios</h3><ul class="chips"><li class="tag">NPS post-compra</li><li class="tag">Reclamos</li><li class="tag">Pruebas moderadas</li></ul><p>No se entendía <strong class="hl">qué cubre</strong> la garantía, <strong class="hl">cuándo empieza</strong> a regir ni <strong class="hl">cómo se articula</strong> con la del fabricante. Eso generaba confusión y desconfianza.</p></div>
         <div><h3>Mercado</h3><ul class="chips"><li class="tag">Exposición</li><li class="tag">Comunicación</li><li class="tag">Adquisición</li></ul><p>Mercado Libre, Falabella, Walmart, Best Buy y OnCity la muestran en primer plano. Ninguno pide datos personales para sumarla.</p></div>
+      </div>
+      <div class="callout">
+        <span class="k mono">Conclusiones</span>
+        <h3 class="callout-t">Cuatro motivos, cuatro frentes</h3>
+        <div class="cols flat">
+          <div><h4>Pasaba desapercibida</h4><p>Sin un vendedor que la ofrezca, en las pruebas nadie la veía si no se lo pedíamos.</p></div>
+          <div><h4>Pedía demasiado</h4><p>La caída entre «Agregar» y «Guardar» se concentraba en el formulario.</p></div>
+          <div><h4>No se entendía la compra</h4><p>Reclamos y NPS mostraban dudas sobre qué cubre y cuándo empieza a regir.</p></div>
+          <div><h4>Un solo lugar</h4><p>El carrito era la única oportunidad de comunicarla.</p></div>
+        </div>
       </div>`],
-    ['conclusiones','Conclusiones','Cuatro motivos, cuatro frentes',`
-      <div class="cols flat">
-        <div><h3>Pasaba desapercibida</h3><p>Sin un vendedor que la ofrezca, en las pruebas nadie la veía si no se lo pedíamos.</p></div>
-        <div><h3>Pedía demasiado</h3><p>La caída entre «Agregar» y «Guardar» se concentraba en el formulario.</p></div>
-        <div><h3>No se entendía la compra</h3><p>Reclamos y NPS mostraban dudas sobre qué cubre y cuándo empieza a regir.</p></div>
-        <div><h3>Un solo lugar</h3><p>El carrito era la única oportunidad de comunicarla.</p></div>
-      </div>`,'pause'],
     ['flujo-nuevo','Ideación','El nuevo flujo',`
       <p>El módulo aparece en todas las categorías que negocio define como garantizables y se suma con un switch, sin formularios.</p>
-      <figure class="rv">${ph('#079FA0','#0A0A0A','Nuevo flujo: carrito, modal ¿Qué cubre? y carrito con garantía. Imagen próximamente')}<figcaption>Carrito, modal «¿Qué cubre?» y carrito con la garantía elegida.</figcaption></figure>
+      <figure class="rv">${pic('img/garantia-flujo-nuevo.webp','Nuevo flujo en tres pantallas: carrito con el módulo de Garantía Premium y switch, modal ¿Qué cubre? con los plazos para elegir, y carrito con la garantía de 3 años sumada')}</figure>
       <p>Se suma una página intermedia entre el carrito y checkout. Se activa en cualquier producto garantizable que el usuario no haya sumado. Por limitaciones técnicas se ofrece para un solo producto por compra: el que quedó sin garantía o, si hay varios, el más caro.</p>
-      <figure class="rv">${ph('#FAC005','#023852','Página intermedia antes del checkout. Imagen próximamente')}<figcaption>Decisión «¿Quedó un producto garantizable sin garantía?» y página intermedia.</figcaption></figure>`],
+      <figure class="rv">${pic('img/garantia-pagina-intermedia.webp','Página intermedia: si en el carrito quedó un producto garantizable sin garantía, antes del checkout se muestra una pantalla para sumarla; si no, se pasa directo al checkout')}</figure>`],
     ['decisiones','Decisiones de diseño','Qué cambió y por qué',`
       <div class="cols">
         <div><span class="n">01</span><h3>Menos fricción</h3><p>Sin formulario de datos: sumarla ya no pide nada.</p></div>
@@ -571,7 +593,7 @@ const SEC_SUCURSAL = [
 ];
 
 const CASES = {
-  'garantia-premium': {n:'01', title:'Garantía Premium', eyebrow:'01 · Frávega / Carrito y checkout',
+  'garantia-premium': {n:'01', title:'Garantía Premium', cover:['img/garantia-portada.webp','Celular con el modal de Garantía Premium y notebook con el carrito de Frávega y el módulo de garantía con switch'], eyebrow:'01 · Frávega / Carrito y checkout',
     lede:'En sucursal la garantía se vende mucho más que online. El objetivo era equiparar esa conversión.',
     meta:[['Rol','Product Designer'],['Área','Carrito y checkout'],['Equipo','Negocio · Producto · UX'],['Estado','En producción']],
     summary:['Los usuarios agregaban la garantía, pero casi nadie la compraba.','Rediseñar dónde se ofrece, cómo se explica y qué pide para sumarla.','El flujo completo está en producción, y la venta online de garantías subió con la primera etapa.'],
@@ -603,7 +625,7 @@ function casePage(id){
       <dl class="meta mono">${meta}</dl>
     </header>
     </div>
-    <div class="zone z-cover"><div class="case-cover rv">${ph('#ECECEA','#5E5E5E','Portada del caso '+c.title+', imagen próximamente')}</div>
+    <div class="zone z-cover"><div class="case-cover rv">${c.cover ? pic(c.cover[0], c.cover[1]) : ph('#ECECEA','#5E5E5E','Portada del caso '+c.title+', imagen próximamente')}</div>
     </div>
     <section class="summary zone z-summary" aria-label="Resumen">
       <div class="rv"><h2>Problema</h2><p>${c.summary[0]}</p></div>
