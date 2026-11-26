@@ -81,9 +81,10 @@ button{font:inherit;color:inherit}
 
 .subh{font-size:1.25rem;letter-spacing:-.025em;margin-top:.5rem}
 .quotes{display:grid;gap:1rem 2rem;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr))}
-.quotes blockquote{margin:0;border-top:1px solid var(--zrule);padding-top:.9rem;display:grid;gap:.4rem}
-.quotes p{font-size:1.25rem;letter-spacing:-.02em;line-height:1.3}
-.quotes cite{font-style:normal;color:var(--zmuted)}
+.quotes blockquote{margin:0;padding-top:.9rem;display:grid;gap:.4rem}
+.quotes p{font-size:1.125rem;font-style:italic;letter-spacing:-.01em;line-height:1.4;color:#6B6B6B}
+.quotes cite{font-style:normal;color:#6B6B6B}
+.subh.gap-top{margin-top:1.5rem}
 .next-link{display:grid;gap:.75rem;text-decoration:none;color:inherit}
 .next-link .t{color:var(--zfg)!important;transition:transform .6s var(--ease)}
 .next-link:hover .t,.next-link:focus-visible .t{transform:translateX(.3rem)}
@@ -166,6 +167,11 @@ a.feature:focus-visible .feature-head{outline:2px solid #0A0A0A;outline-offset:6
 .feature .ph{aspect-ratio:16/8;clip-path:inset(0 0 0 0);transition:clip-path 1.2s var(--ease)}
 @media (max-width:700px){.feature .ph{aspect-ratio:4/3}}
 .js-motion .feature .ph:not(.in){clip-path:inset(8% 6% 8% 6%)}
+.feature .fpic{aspect-ratio:16/8;overflow:hidden;clip-path:inset(0 0 0 0);transition:clip-path 1.2s var(--ease)}
+@media (max-width:700px){.feature .fpic{aspect-ratio:4/3}}
+.feature .fpic img{display:block;width:100%;height:100%;object-fit:cover;transition:transform 1.2s var(--ease)}
+.js-motion .feature .fpic:not(.in){clip-path:inset(8% 6% 8% 6%)}
+a.feature:hover .fpic img,a.feature:focus-visible .fpic img{transform:scale(1.02)}
 a.feature:hover .arr,a.feature:focus-visible .arr{transform:translateX(.18em)}
 a.feature:hover .ph,a.feature:focus-visible .ph{--z:1.02}
 
@@ -319,11 +325,6 @@ a.feature:hover .ph,a.feature:focus-visible .ph{--z:1.02}
 .cols .n{font-family:var(--mono);font-size:.875rem;color:var(--zmuted)}
 .cols.flat{gap:2.5rem 3rem}
 .cols.flat > div{border-top:0;padding-top:0}
-/* Pausa visual: bloque bordó dentro de la columna de contenido */
-.sec.pause{background:var(--wine);color:#FFFFFF;padding:clamp(2rem, 5vw, 4rem) clamp(1.25rem, 4vw, 3.5rem)}
-.sec.pause .k,.sec.pause h2,.sec.pause h3{color:#FFFFFF}
-.sec.pause .cols p{color:rgba(255,255,255,.86)}
-.sec.pause .cols{grid-template-columns:repeat(auto-fit,minmax(min(100%,190px),1fr))}
 .say{font-size:clamp(1.5rem, 1.1rem + 1.6vw, 2.5rem);line-height:1.12;letter-spacing:-.03em;font-weight:600;max-width:26ch}
 .say em{font-style:normal;text-decoration:underline;text-decoration-thickness:.08em;text-underline-offset:.12em}
 figure{margin:0}
@@ -339,20 +340,37 @@ figure .pic{aspect-ratio:16/9}
 /* Más aire entre la fila de etiquetas y el párrafo, solo donde hay etiquetas */
 .cols .chips{margin-bottom:.6rem}
 /* Bloque destacado dentro de una sección (Conclusiones de Garantía Premium): celeste, textos del sitio */
-.callout{background:#7CFDF9;color:var(--ink);padding:clamp(2rem, 5vw, 4rem) clamp(1.25rem, 4vw, 3.5rem);display:grid;gap:1.25rem;margin-top:clamp(1.5rem, 4vw, 3rem)}
-.callout .k{color:var(--wine)}
+.callout{--callout-bg:#A0F4F1;background:var(--callout-bg);color:var(--ink);padding:clamp(2rem, 5vw, 4rem) clamp(1.25rem, 4vw, 3.5rem);display:grid;gap:1.25rem;margin-top:clamp(1.5rem, 4vw, 3rem)}
+.callout .k{color:#5E5E5E}
 .callout-t{font-size:clamp(1.75rem, 1.3rem + 1.8vw, 3rem);line-height:1;letter-spacing:-.04em}
 .callout .cols{grid-template-columns:repeat(auto-fit,minmax(min(100%,190px),1fr));margin-top:.5rem}
 .callout .cols p{color:#5E5E5E}
+.callout .say{color:var(--ink);margin-top:.25rem}
+/* Caso 2: cinco conclusiones, 3 arriba y 2 abajo (mitad y mitad) */
+@media (min-width:900px){.callout .cols.c5{grid-template-columns:repeat(6,minmax(0,1fr))}.callout .cols.c5 > div{grid-column:span 2}.callout .cols.c5 > div:nth-child(n+4){grid-column:span 3}}
 .callout h4{margin:0;font-size:1.25rem;font-weight:600;letter-spacing:-.025em;line-height:1.15}
 figcaption{color:var(--zmuted);margin-top:.75rem;font-size:1rem}
 .chips{display:flex;flex-wrap:wrap;gap:.4rem;list-style:none;padding:0;margin:0}
 /* Bloques por etapa: imagen y texto en zigzag en desktop, imagen arriba en mobile */
 .stage{display:grid;gap:1.5rem;align-items:start}
+.stage + .stage{margin-top:clamp(2.5rem, 7vw, 6rem)}
+.p-lead{margin-bottom:clamp(.5rem, 2.5vw, 2.5rem)}
+.shot{display:block;width:100%;height:auto}
+/* El último renglón del texto queda a la altura del borde inferior de los celulares (sin la sombra) */
+@media (min-width:900px){.stage.end{align-items:end}.stage.end .stage-text{padding-bottom:var(--below,0)}}
+.rows.compact li{grid-template-columns:2rem minmax(0,1fr);gap:.5rem;padding:.2rem 0;border:0;font-size:1rem;line-height:1.45}
+.rows.compact li:last-child{border-bottom:0}
+.rows.compact li::before{font-size:.8125rem;padding-top:.15rem}
+.ui-note{display:grid;gap:.6rem;margin-top:clamp(1.5rem, 4vw, 3rem)}
+.ui-note .subh{margin:0}
+/* Imagen distinta para desktop y mobile */
+.only-m{display:none}
+@media (max-width:700px){.only-d{display:none}.only-m{display:grid;gap:.75rem}}
 .stage .ph{aspect-ratio:4/3}
 .stage-text{display:grid;gap:1rem;align-content:start}
 .stage-text .n{color:var(--zmuted)}
-@media (min-width:900px){.stage{grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(2rem, 4vw, 3.5rem)}.stage.rev .ph{order:2}}
+.stage-text .rows{margin-top:.25rem}
+@media (min-width:900px){.stage{grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(2rem, 4vw, 3.5rem)}.stage.rev > :first-child{order:2}}
 .plain{margin:0;padding-left:1.2em;display:grid;gap:.35rem}
 .next{padding:clamp(3.5rem, 8vw, 6rem) var(--gutter);display:grid;gap:.75rem}
 .next .row{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;color:var(--zmuted);border-top:1px solid var(--zline);padding-top:1rem}
@@ -390,13 +408,14 @@ figcaption{color:var(--zmuted);margin-top:.75rem;font-size:1rem}
 
 <script>
 const P = t => `<span class="pending">${t||'Pendiente'}</span>`;
-const pic = (src, alt) => `<div class="pic"><img src="${src}" alt="${alt}" loading="lazy" decoding="async" width="1600" height="900"></div>`;
+const pic = (src, alt, srcM) => `<div class="pic">${srcM ? `<picture><source media="(max-width:700px)" srcset="${srcM}"><img src="${src}" alt="${alt}" loading="lazy" decoding="async"></picture>` : `<img src="${src}" alt="${alt}" loading="lazy" decoding="async" width="1600" height="900">`}</div>`;
+const fpic = im => `<div class="fpic"><picture><source media="(max-width:700px)" srcset="${im.m}"><img src="${im.d}" alt="${im.alt}" loading="lazy" decoding="async"></picture></div>`;
 const ph = (tone, fg, label='Imagen próximamente') => `<div class="ph" style="--tone:${tone};--tone-fg:${fg}" role="img" aria-label="${label}"><span class="soon" aria-hidden="true">Imagen próximamente</span></div>`;
 
 const FEATURED = [
   {id:'garantia-premium', ready:true, anim:true, n:'01', title:'Garantía Premium', client:'Frávega', area:'Carrito y checkout', kind:'Producto digital',
    line:'Cómo acercar la venta online de garantías a la de sucursal: 0,26 % vs. 4,56 %', tone:'#079FA0', fg:'#0A0A0A'},
-  {id:'seleccion-sucursal', ready:true, n:'02', title:'Selección de sucursal', client:'Frávega', area:'Shipping-checkout', kind:'Producto digital',
+  {id:'seleccion-sucursal', ready:true, n:'02', img:{d:'img/sucursal-home-d.webp', m:'img/sucursal-home-m.webp', alt:'Dos celulares con el modal Seleccionar sucursal: el listado con distancia y precio, y el mapa con buscador'}, title:'Selección de sucursal', client:'Frávega', area:'Shipping-checkout', kind:'Producto digital',
    line:'Validar el problema antes de diseñar una solución ya definida', tone:'#9FD8C5', fg:'#023852'}
 ];
 const MORE = [
@@ -422,7 +441,7 @@ function home(){
         <h3 class="feature-title"><span class="num"><span>${f.n}</span></span><span class="t">${f.title}</span></h3>
         <div class="feature-sub"><p class="feature-line">${f.line}</p><p class="feature-meta mono">${f.client} / ${f.area}</p></div>
       </div>
-      ${f.anim ? ganim() : ph(f.tone,f.fg,'Imagen del caso '+f.title+', próximamente')}`;
+      ${f.anim ? ganim() : f.img ? fpic(f.img) : ph(f.tone,f.fg,'Imagen del caso '+f.title+', próximamente')}`;
     const card = f.ready ? `<a class="feature" href="#${f.id}" id="card-${f.id}">${inner}</a>` : `<div class="feature">${inner}</div>`;
     return f.anim ? `<div class="feature-wrap">${card}<button class="ganim-pause" type="button" aria-pressed="false"><span class="gp-i" aria-hidden="true"></span><span class="vh">Pausar animación</span></button></div>` : card;
   }).join('');
@@ -536,59 +555,64 @@ const SEC_SUCURSAL = [
       <p>Frávega es una de las principales plataformas de e-commerce y retail de Argentina. Entre octubre de 2024 y septiembre de 2025, el 59,7 % de las compras online se retiró en sucursal.</p>
       <p>La iniciativa surgió de una percepción compartida en Producto: elegir sucursal era una mala experiencia y llegaban reclamos. Sin métricas claras que lo respaldaran, la consigna fue implementar un mapa dinámico. Con poco tiempo y limitaciones técnicas, mi rol fue entender qué fallaba antes de diseñar y definir una solución viable junto a PO, TL y Front.</p>`],
     ['flujo','Punto de partida','Así era el flujo',`
-      <figure class="rv">${ph('#ECECEA','#5E5E5E','Flujo anterior de selección de sucursal. Imagen próximamente')}<figcaption>Un modal con un select por provincia y, al elegirla, el listado de todas las sucursales con un mapa fijo, solo ilustrativo.</figcaption></figure>`],
+      <figure class="rv">
+        <div class="only-d">${pic('img/sucursal-antes-d.webp','Flujo anterior: select de provincias y listado de sucursales de Capital Federal con un mapa fijo')}</div>
+        <div class="only-m"><img class="shot" src="img/sucursal-antes-m1.webp" alt="Flujo anterior, selección: el modal «Retiro GRATIS en Sucursal» y el select de provincias desplegado" loading="lazy" decoding="async"><img class="shot" src="img/sucursal-antes-m2.webp" alt="Flujo anterior, listado: sucursales de Capital Federal con el botón Siguiente y un mapa, sin y con una sucursal elegida" loading="lazy" decoding="async"></div>
+      </figure>`],
     ['discovery','Discovery exprés','Antes del mapa, el problema',`
       <p>Con poco tiempo, la información se buscó donde ya existía. El objetivo no era validar el mapa, sino entender qué impedía retirar en sucursal sin fricción.</p>
-      <div class="cols">
+      <div class="cols flat">
         <div><h3>Grabaciones de Hotjar</h3><p>Sesiones reales mostraron dos patrones: el usuario sube y baja por un listado sin orden claro, y trata de usar un mapa que es solo ilustrativo.</p></div>
         <div><h3>Benchmark</h3><p>Nueve competidores, entre ellos Mercado Libre, Best Buy, Falabella, Easy y Zara. Seis tienen buscador, seis usan el mapa para buscar y seis ordenan el listado. Frávega no cumplía ninguna de las tres.</p></div>
       </div>
-      <h3 class="subh">Lo que decían los clientes en la encuesta NPS</h3>
+      <h3 class="subh gap-top">Lo que decían los clientes en la encuesta NPS</h3>
       <div class="quotes">
         <blockquote><p>«Mejoraron la plataforma de compra, pero el retiro es engorroso.»</p><cite class="mono">NPS 8</cite></blockquote>
         <blockquote><p>«Me pedía modificar dirección, cuando yo pedí retiro en sucursal.»</p><cite class="mono">NPS 3</cite></blockquote>
         <blockquote><p>«No se podía cambiar la sucursal de retiro. Tuve que cancelar la compra.»</p><cite class="mono">NPS 6</cite></blockquote>
+      </div>
+      <div class="callout">
+        <span class="k mono">Conclusiones</span>
+        <h3 class="callout-t">El mapa no era el primer paso</h3>
+        <p class="say">El problema principal no era la falta de un mapa dinámico, sino <em>no poder encontrar ni entender</em> qué sucursal elegir.</p>
+        <div class="cols flat c5">
+          <div><h4>Buscador</h4><p>Encontrar rápido sin recorrer todo el listado. El usuario no tenía otra forma de saber si hay una sucursal cerca.</p></div>
+          <div><h4>Mapa navegable</h4><p>Ubicarse y explorar, no solo ilustrar. Los usuarios intentan usarlo.</p></div>
+          <div><h4>Filtros</h4><p>Clave cuando se sumen puntos de retiro de terceros. Permite acotar la búsqueda para decidir.</p></div>
+          <div><h4>Ordenamiento</h4><p>Un criterio claro, casi siempre por cercanía. Hoy no se entiende el ordenamiento, sobre todo en la provincia de Buenos Aires.</p></div>
+          <div><h4>Información</h4><p>Comparar de un vistazo distancia, fecha de retiro y costo.</p></div>
+        </div>
       </div>`],
-    ['conclusiones','Conclusiones','El mapa no era el primer paso',`
-      <p class="say">El problema principal no era la falta de un mapa dinámico, sino <em>no poder encontrar ni entender</em> qué sucursal elegir.</p>
-      <div class="cols flat">
-        <div><h3>Buscador</h3><p>Encontrar rápido sin recorrer todo el listado. El usuario no tenía otra forma de saber si hay una sucursal cerca.</p></div>
-        <div><h3>Mapa navegable</h3><p>Ubicarse y explorar, no solo ilustrar. Los usuarios intentan usarlo.</p></div>
-        <div><h3>Filtros</h3><p>Clave cuando se sumen puntos de retiro de terceros. Permite acotar la búsqueda para decidir.</p></div>
-        <div><h3>Ordenamiento</h3><p>Un criterio claro, casi siempre por cercanía. Hoy no se entiende el ordenamiento, sobre todo en la provincia de Buenos Aires.</p></div>
-        <div><h3>Información</h3><p>Comparar de un vistazo distancia, fecha de retiro y costo.</p></div>
-      </div>`,'pause'],
     ['propuesta','Propuesta','No todo podía resolverse a la vez',`
-      <p>Tres conclusiones tenían alto impacto y bajo costo técnico; dos pedían más desarrollo. La solución se pensó en dos etapas: un MVP con lo más urgente y un norte para evolucionar.</p>
-      <div class="stage rv">
-        ${ph('#ECECEA','#5E5E5E','Dos pantallas del MVP: listado con buscador por código postal y mapa con el detalle de la sucursal. Imagen próximamente')}
+      <p class="p-lead">Tres conclusiones tenían alto impacto y bajo costo técnico; dos pedían más desarrollo. La solución se pensó en dos etapas: un MVP con lo más urgente y un norte para evolucionar.</p>
+      <div class="stage end rv" style="--below:7.5%">
+        <img class="shot" src="img/sucursal-mvp.webp" alt="Dos celulares con el modal Seleccionar sucursal: el listado por código postal y el detalle de una sucursal con mapa" loading="lazy" decoding="async" width="1248" height="1179">
         <div class="stage-text">
           <span class="n mono">MVP · En producción</span>
-          <ol class="rows"><li>Siempre se ve un listado de sucursales al entrar.</li><li>El listado parte del código postal cargado en el checkout y recomienda cercanas si no hay en ese CP.</li><li>Búsqueda por código postal.</li><li>La información más relevante en una primera vista.</li><li>Elegir una sucursal y verla en el mapa ilustrativo con su detalle.</li></ol>
-          <h3 class="subh">Criterio de ordenamiento</h3>
-          <ul class="chips"><li class="tag">1 · Coincidencia de CP</li><li class="tag">2 · Cercanía del CP</li><li class="tag">3 · SLA</li><li class="tag">4 · Orden alfabético</li></ul>
+          <ol class="rows compact"><li>Siempre se ve un listado de sucursales al entrar.</li><li>El listado parte del CP del checkout. Si no hay sucursales ahí, recomienda las más cercanas.</li><li>Búsqueda por código postal.</li><li>La información más relevante en una primera vista.</li><li>Elegir una sucursal y verla en el mapa ilustrativo con su detalle.</li><li>Criterio de ordenamiento: coincidencia de CP, cercanía al CP, SLA y orden alfabético.</li></ol>
         </div>
       </div>
-      <div class="stage rev rv">
-        ${ph('#ECECEA','#5E5E5E','Tres pantallas del evolutivo: mapa con Buscar en esta área, buscador con autocompletado y listado con Ordenar por cercanía. Imagen próximamente')}
+      <div class="stage rev end rv" style="--below:6.8%">
+        <img class="shot" src="img/sucursal-evolutivo.webp" alt="Tres celulares con el mapa, el buscador con autocompletado y el listado ordenado por cercanía" loading="lazy" decoding="async" width="1600" height="1153">
         <div class="stage-text">
           <span class="n mono">Evolutivo</span>
-          <ol class="rows"><li>Usar la geolocalización.</li><li>Buscar por lugar, CP, barrio o ciudad, con autocompletado.</li><li>Buscar desde el listado o desde el mapa dinámico.</li><li>Ordenar por cercanía, SLA o costo.</li></ol>
+          <ol class="rows compact"><li>Usar la geolocalización.</li><li>Buscar por lugar, CP, barrio o ciudad, con autocompletado.</li><li>Buscar desde el listado o desde el mapa dinámico.</li><li>Ordenar por cercanía, SLA o costo.</li></ol>
         </div>
       </div>
-      <h3 class="subh">Decisiones de UI</h3>
-      <p>Componentes, tipografías, colores y botones homologados con el Design System; jerarquía y espaciado pensados para escanear rápido.</p>`],
+      <div class="ui-note"><h3 class="subh">Decisiones de UI</h3>
+      <p>Componentes, tipografías, colores y botones homologados con el Design System; jerarquía y espaciado pensados para escanear rápido.</p></div>`],
     ['impacto','Impacto esperado','Qué mejora para quien compra',`
-      <div class="cols">
+      <div class="cols flat">
         <div><h3>Más claridad</h3><p>Sabe enseguida si hay una sucursal en su zona.</p></div>
         <div><h3>Menos frustración</h3><p>Ya no recorre listados enormes para descubrirlo.</p></div>
         <div><h3>Consistencia</h3><p>Un patrón alineado con buenas prácticas de e-commerce.</p></div>
         <div><h3>Confianza</h3><p>Ve dirección, tiempo de entrega y costo antes de decidir.</p></div>
       </div>`],
     ['resultados','Cierre','Resultados y aprendizajes',`
-      <p>El MVP está en producción. El modal anterior no tenía ninguna métrica, solo la tasa de abandono en checkout en el paso de shipping. Por eso, antes de lanzar, se acordó qué medir en este nuevo modal. Las métricas principales son la tasa de conversión, los clics en la búsqueda y la tasa de cierre. También quisimos entender otros comportamientos:</p>
+      <p>El MVP está en producción. El modal anterior no tenía ninguna métrica, solo la tasa de abandono en checkout en el paso de shipping. Por eso, antes de lanzar, se acordó qué medir en este nuevo modal. Las métricas principales son la <strong class="hl">tasa de conversión</strong>, los <strong class="hl">clics en la búsqueda</strong> y la <strong class="hl">tasa de cierre</strong>.</p>
+      <p>También quisimos entender otros comportamientos:</p>
       <ul class="plain"><li>¿Cuánto scrollea el usuario si no ve su sucursal conveniente arriba de todo?</li><li>¿Abandona en el listing o en la página de detalle?</li><li>¿Hace clic en el mapa?</li><li>¿Cuánto tarda en encontrar una sucursal?</li></ul>
-      <p>Con esos datos se va a decidir qué evolucionar primero: filtros, geolocalización o mapa dinámico. ${P('Métricas post-lanzamiento, si existen')}</p>
+      <p>Con esos datos se va a decidir qué evolucionar primero: filtros, geolocalización o mapa dinámico.</p>
       <p class="say">Cuando la solución viene definida, validar el problema antes de diseñar <em>no demora el proyecto, lo ordena</em>.</p>`]
 ];
 
@@ -599,7 +623,7 @@ const CASES = {
     summary:['Los usuarios agregaban la garantía, pero casi nadie la compraba.','Rediseñar dónde se ofrece, cómo se explica y qué pide para sumarla.','El flujo completo está en producción, y la venta online de garantías subió con la primera etapa.'],
     figures:[['4,56 %','4.56','venta de garantías en sucursal','base'],['0,26 %','0.26','venta online antes del cambio','start'],['1,12 %','1.12','venta online dos meses después de la etapa 1','hi']],
     sections: SEC_GARANTIA, next:{id:'seleccion-sucursal', title:'Selección de sucursal'}},
-  'seleccion-sucursal': {n:'02', title:'Selección de sucursal', eyebrow:'02 · Frávega / Shipping-checkout',
+  'seleccion-sucursal': {n:'02', title:'Selección de sucursal', cover:['img/sucursal-portada-d.webp','Celular con el modal Seleccionar sucursal y el buscador con autocompletado, sobre un mapa de Belgrano','img/sucursal-portada-m.webp'], eyebrow:'02 · Frávega / Shipping-checkout',
     lede:'Mejorar la experiencia de retiro en sucursal, la modalidad preferida de los clientes de Frávega.',
     meta:[['Rol','Product Designer'],['Área','Shipping-checkout'],['Equipo','Negocio · Producto · UX · TL'],['Estado','MVP en producción']],
     summary:['Producto ya tenía la solución definida, un mapa dinámico, pero no había datos que confirmaran que ese era el problema.','Un discovery exprés mostró que el dolor era no poder encontrar ni entender qué sucursal elegir. Se priorizaron buscador y ordenamiento.','Una primera versión alcanzable con PO, TL y Front, y una hoja de ruta que deja el mapa dinámico como siguiente paso.'],
@@ -625,7 +649,7 @@ function casePage(id){
       <dl class="meta mono">${meta}</dl>
     </header>
     </div>
-    <div class="zone z-cover"><div class="case-cover rv">${c.cover ? pic(c.cover[0], c.cover[1]) : ph('#ECECEA','#5E5E5E','Portada del caso '+c.title+', imagen próximamente')}</div>
+    <div class="zone z-cover"><div class="case-cover rv">${c.cover ? pic(c.cover[0], c.cover[1], c.cover[2]) : ph('#ECECEA','#5E5E5E','Portada del caso '+c.title+', imagen próximamente')}</div>
     </div>
     <section class="summary zone z-summary" aria-label="Resumen">
       <div class="rv"><h2>Problema</h2><p>${c.summary[0]}</p></div>
@@ -694,7 +718,7 @@ function render(){
 function setup(){
   // Revelar al entrar
   io && io.disconnect();
-  const targets = main.querySelectorAll('.rv, .feature .ph, .feature .ganim, [data-count], .gbanner');
+  const targets = main.querySelectorAll('.rv, .feature .ph, .feature .fpic, .feature .ganim, [data-count], .gbanner');
   if(reduce || !('IntersectionObserver' in window)){ targets.forEach(t=>t.classList.add('in')); }
   else {
     io = new IntersectionObserver(es=>es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); if(e.target.dataset.count) countUp(e.target); io.unobserve(e.target); } }),{rootMargin:'0px 0px -8% 0px'});
